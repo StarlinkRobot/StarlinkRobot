@@ -1,4 +1,8 @@
-## Hi there 👋
+## Hi, thanks a lot for your interests in Starlink Robot! 👋
+
+## The homepage and dataset will be released in early July, after we submit the paper.
+
+
 
 <!--
 **StarlinkRobot/StarlinkRobot** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
