@@ -1,6 +1,6 @@
 ## Hi, thanks a lot for your interests in Starlink Robot! 👋
 
-## The homepage and dataset will be released in early July, after we submit the paper.
+## The homepage and dataset will be released in July 15, we are currently finalizing data calibration and organization. Thanks for your patience!
 
 
 
