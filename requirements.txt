@@ -1,0 +1,6 @@
+rosbag  # ROS bag parsing (apt: ros-noetic-rosbag)
+pandas  # Data handling
+numpy  # Arrays/math
+matplotlib  # Visualization
+h5py  # HDF5 storage
+grpcurl  # For LEOViz gRPC verification (from LEOViz docs)
