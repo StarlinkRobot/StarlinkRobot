@@ -1,54 +1,7 @@
-# Starlink Robot: A Platform and Dataset for Mobile Satellite Communication
+# StarlinkRobot/StarlinkRobot
 
-[![GitHub Pages](https://img.shields.io/badge/GitHub-Pages-blue)](https://starlinkrobot.github.io) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+## 🤖 Starlink Robot
 
-This repository is the companion site for the SenSys 2026 paper: "The Starlink Robot: A Platform and Dataset for Mobile Satellite Communication". It hosts the dataset (via external link), analysis code, video demonstration, and technical documentation. The platform integrates a Unitree Go2 wheeled robot with Starlink Mini, Livox Mid-360 LiDAR, and fisheye camera for studying mobile satellite communication, as detailed in the paper's hardware (Section 3.1) and software architecture (Section 3.2).
-
-## Overview
-The Starlink Robot captures synchronized multi-modal data: communication metrics (e.g., RTT, throughput, SNR from Starlink gRPC via LEOViz), motion dynamics (from robot SLAM), environmental context (LiDAR point clouds, fisheye sky images), and satellite tracking. The initial dataset includes 7 hours from London urban environments, with expansions for high-speed mobility and occlusions (per response file Planned Revision 5). It contains over 25K RTT measurements, 630K LiDAR frames, and 378K fisheye images across open areas, tree-covered paths, and urban settings at speeds 0.1-2.0 m/s.
-
-## Installation
-1. Clone the repo: `git clone https://github.com/StarlinkRobot/StarlinkRobot.git`
-2. Install Python dependencies: `pip install -r requirements.txt`
-3. For LEOViz: Clone from https://github.com/clarkzjw/LEOViz; install Docker for containerized runs (per LEOViz docs).
-4. ROS Noetic on Ubuntu 18.04: Follow https://wiki.ros.org/noetic/Installation (paper's computing platform).
-5. Unitree Go2 ROS Drivers: Clone https://github.com/alexlin2/unitree_go2_ros for ROS1 interface (WebRTC for commands, publishes /slam/odom, /camera, /lidar topics).
-6. Livox ROS Driver: Clone https://github.com/Livox-SDK/livox_ros_driver2; build for Mid-360 support.
-
-## Usage Instructions
-Detailed steps for hardware setup, data collection, and analysis, based on paper Section 3 and response file implementations.
-
-### Hardware Setup (From Paper Section 3.1)
-- Mount Starlink Mini on 3D-printed support (replaces aluminum frame) atop Unitree Go2 wheeled base (15 kg payload, differential drive).
-- Connect Starlink to Intel NUC via Ethernet; power via DC-DC converter (24V robot to 12V Starlink).
-- Install Livox Mid-360 LiDAR (360° FoV, 25 Hz, 0.05 m accuracy) and fisheye camera (185° FoV, 15 Hz, 1920x1080) upward-facing.
-- Use robot's internal SLAM for motion/localization (no separate IMU/GPS; sync via NUC clock).
-- Power: 60-110W base + 20-40W Starlink; ~2 hours endurance per deployment.
-
-### Data Collection Steps (Enriched from Paper Section 3.2 and LEOViz/Unitree/Livox Sources)
-1. **Power On**: Activate Unitree Go2 and NUC. Ensure battery charged for 2-hour sessions (paper endurance).
-2. **Start ROS Noetic**: `roscore` then `source devel/setup.bash` (from Unitree ROS setup).
-3. **Start Unitree SLAM/Drivers**: Launch from cloned repo: `roslaunch unitree_go2_ros go2_driver.launch` (publishes /slam/odom for velocity/position, based on https://github.com/alexlin2/unitree_go2_ros).
-4. **Start Sensors**: 
-   - LiDAR: `roslaunch livox_ros_driver2 msg_MID360_launch.launch` (from https://github.com/Livox-SDK/livox_ros_driver2; publishes /livox/lidar point clouds).
-   - Camera: Launch fisheye driver (e.g., `roslaunch usb_cam usb_cam.launch` if using standard ROS cam; publishes /fisheye/image).
-5. **Start LEOViz**: Use Docker for gRPC queries (1Hz satellite data): `./scripts/run_leoviz.sh --mobile` (logs to CSV/Parquet; from LEOViz repo).
-6. **Start Data Logging**: 
-   - ROS bags: `rosbag record -a -O data.bag` (all topics: LiDAR, camera, SLAM).
-   - Network probes: Run ping for RTT (e.g., `ping -i 0.01 8.8.8.8 > rtt_log.txt`); log Starlink metrics via LEOViz.
-7. **Mobility Control**: Use joystick or SDK for velocity (0.1-2.0 m/s via sport commands from Unitree ROS). Collect in diverse scenarios (open sky, trees, high-speed; per response file Revision 5).
-8. **Post-Collection Processing**: 
-   - Parse: `./scripts/parse_rosbag.py data.bag`
-   - Sync: `./scripts/sync_datasets.py gps.csv [other_csvs]`
-   - Visualize: `./scripts/visualize_metrics.py synced.h5` (reproduces paper figures like RTT vs. velocity).
-
-For data access/schema: See [docs/data_structure.md](docs/data_structure.md) and [docs/file_formats.md](docs/file_formats.md).  
-For LEOViz: See [docs/leoviz_integration.md](docs/leoviz_integration.md).
-
-## Reproducing Paper Figures (From Response File Revision 6)
-Use `./scripts/visualize_metrics.py` on parsed HDF5 to plot RTT means/confidence intervals vs. velocity/obstructions (e.g., Figs. 9,10,12,15 in paper).
-
-## Original Content (Retained)
 Thank you for your interest in Starlink Robot! 🌟
 
 We’re excited to share our progress with you.
@@ -59,7 +12,49 @@ We’re excited to share our progress with you.
 
 Includes the video, datasets, and paper.
 
-## Visualization Tool: LEOViz
+## About
+
+The Starlink Robot Dataset
+
+# Enhanced Overview
+The Starlink Robot is a mobile platform based on the Unitree Go2 wheeled version, integrating Starlink Mini for satellite connectivity, Livox Mid-360 LiDAR for 3D mapping, an upward-facing fisheye camera for sky visibility, and motion sensors via the robot's internal SLAM. It captures synchronized multi-modal data to study satellite communication under motion and occlusion, as detailed in the SenSys 2026 paper. The dataset includes over 7 hours of data from London urban environments, with 25K+ RTT measurements, 630K LiDAR frames, and 378K fisheye images, expanded with high-speed and late-afternoon sessions for diversity.
+
+- **Collaborators**: Ongoing with Norwegian University of Science and Technology (NTNU) and University of Virginia for geographical diversity.
+- **Dataset Access**: Hosted on the companion site (add your link here).
+- **Video Demonstration**: Available on the companion site (add your link here).
+
+## Installation
+1. Clone the repo: `git clone https://github.com/StarlinkRobot/StarlinkRobot.git`
+2. Install Python dependencies: `pip install -r requirements.txt`
+3. Install ROS Noetic on Ubuntu 18.04 for bag parsing (as per paper Section 3.2).
+4. For LEOViz: Clone from https://github.com/clarkzjw/LEOViz and install its dependencies (Python, gRPC).
+5. Hardware requirements: Unitree Go2-W (dimensions 70x43x50cm, payload 8-12kg, weight 18kg), Starlink Mini (weight 1.10kg, IP67, -30°C to 50°C operating temp), Livox Mid-360 (65x65x60mm, 6.5W, 905nm laser).
+
+## Usage Instructions
+Detailed steps for hardware setup, data collection, and analysis, based on paper Section 3 (System Design).
+
+### Hardware Setup
+- Assemble the platform on Unitree Go2 wheeled base (differential drive, velocity 0.1-2.0 m/s, payload ≈8kg).
+- Mount Starlink Mini (weight 1.10kg) on 3D-printed support to maintain upward orientation and reduce vibration.
+- Connect Starlink Mini to Intel NUC via Ethernet; use DC-DC converter for power (robot 24V to Starlink 12V).
+- Install Livox Mid-360 LiDAR (360° x 59° FOV, 200,000 points/s, 25 Hz custom rate per paper, 0.05m accuracy) and fisheye camera (185° FOV, 15 Hz, 1920x1080 resolution) upward-facing.
+- No separate IMU/GPS: Rely on robot's internal SLAM estimator and Starlink's built-in localization for motion data.
+- Power: Platform draws 60-110W (base) + 20-40W (Starlink Mini, 15W idle), supporting ~2 hours operation.
+
+### Data Collection Steps
+1. **Power On**: Activate Unitree Go2 and Intel NUC (Ubuntu 18.04). Ensure battery is charged for 2-hour endurance.
+2. **Start ROS**: Run `roscore` and source workspace. Launch sensor drivers: `roslaunch livox_ros_driver livox_lidar.launch` for LiDAR (25 Hz), and camera node for fisheye (15 Hz).
+3. **Start SLAM**: Initialize Unitree internal SLAM via SDK for odometry, velocity, and position tracking (sub-ms alignment via NUC clock).
+4. **Start LEOViz**: Execute `./scripts/run_leoviz.sh` to query Starlink gRPC at 1Hz for satellite tracking (positions, elevation, SNR). Enable JSON logging.
+5. **Network Probing**: Run tools like ping for RTT (20-400ms range), iperf for throughput, logging to CSV with timestamps.
+6. **Data Logging**: Use `rosbag record -a` for raw sensors (LiDAR point clouds, camera images, SLAM odom). Log Starlink/LEOViz to separate CSVs.
+7. **Mobility Execution**: Control robot via joystick or SDK for scenarios (steady 0.1-2.0 m/s, variable speeds, open/tree-urban paths). Collect under diverse conditions like high-speed (up to 2 m/s) and occlusions.
+8. **Post-Processing**: Parse bags with `./scripts/parse_rosbag.py`, sync via `./scripts/sync_datasets.py` (GPS-based alignment), visualize with `./scripts/visualize_metrics.py` to reproduce paper figures (e.g., RTT vs. velocity).
+9. **LEOViz Parsing**: Use `./examples/leoviz_output_parser.py` to align JSON logs with metrics.
+
+For dataset details, see [docs/data_structure.md](docs/data_structure.md) and [docs/file_formats.md](docs/file_formats.md). For LEOViz, see [docs/leoviz_integration.md](docs/leoviz_integration.md).
+
+## 📊 Visualization Tool: LEOViz
 
 This work uses the visualization tool [LEOViz](https://github.com/clarkzjw/LEOViz), developed by Jinwei Zhang from the Pan Lab, led by Prof. Jianping Pan at the University of Victoria.
 
@@ -67,11 +62,9 @@ This work uses the visualization tool [LEOViz](https://github.com/clarkzjw/LEOVi
 
 🧑‍🤝‍🧑 We are planning to work together in future collaborations to further enhance the Starlink Robot project.
 
-## Project Status
+## 🚧 Project Status
 
 Due to the large volume of data, we are continuously improving the system and dataset.
 
-📚 Documentation, 🧑‍💻 source code, and 🛠️ usage instructions will be provided in the next update.
-
 ## License
-MIT License. Acknowledgments: LEOViz developers; Unitree Robotics; Livox SDK.
+MIT License. Acknowledgments: LEOViz developers; Unitree, Livox, Starlink vendors.
