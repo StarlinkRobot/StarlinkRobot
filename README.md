@@ -7,7 +7,6 @@ This repository is the companion site for the SenSys 2026 paper: "The Starlink R
 ## Overview
 The Starlink Robot captures synchronized multi-modal data: communication metrics (e.g., RTT, throughput, SNR from Starlink gRPC via LEOViz), motion dynamics (from robot SLAM), environmental context (LiDAR point clouds, fisheye sky images), and satellite tracking. The initial dataset includes 7 hours from London urban environments, with expansions for high-speed mobility and occlusions (per response file Planned Revision 5). It contains over 25K RTT measurements, 630K LiDAR frames, and 378K fisheye images across open areas, tree-covered paths, and urban settings at speeds 0.1-2.0 m/s.
 
-- **Paper**: [Link to PDF or arXiv] (e.g., SenSys_25_StarlinkRobot__Revise_.pdf)
 - **Dataset Download**: [Link to Zenodo/Google Drive/etc.] (e.g., https://zenodo.org/records/XXXXX) – ROS bags, CSVs, HDF5; expanded with NTNU/UVA collaborations for geographical diversity.
 - **Video Demonstration**: [Link to YouTube/video] (e.g., platform operation, data visualization reproducing paper figures).
 - **Collaborators**: Norwegian University of Science and Technology (NTNU) and University of Virginia (UVA) for ongoing dataset contributions (per response file Planned Revision 5).
