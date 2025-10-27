@@ -1,5 +1,3 @@
-# 🤖 StarlinkRobot/StarlinkRobot
-
 ## 🤖 Starlink Robot
 
 Thank you for your interest in Starlink Robot! 🌟
